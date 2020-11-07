@@ -1,11 +1,6 @@
-const {
-  groupItems,
-  parseData,
-  placeOrders,
-  sortVolumes,
-} = require('./scripts/index');
-const _ = require('lodash');
+// const _ = require('lodash');
 const fs = require('fs');
+const { groupItems, parseData, placeOrders, sortVolumes } = require('./scripts/index');
 
 require('dotenv').config();
 
@@ -26,6 +21,7 @@ Object.keys(orderedItems).forEach((store) => {
   const storeItems = orderedItems[store];
 
   Object.keys(storeItems).forEach((packageCode) => {
+    // console.log(store, packageCode);
     placeOrders(storeItems[packageCode], store, packageCode);
   });
 });

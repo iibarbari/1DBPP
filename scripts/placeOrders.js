@@ -6,6 +6,7 @@ module.exports = (items, store, packageCode) => {
   const binSizes = [17, 22, 33];
   const boxes = [];
   const initialItems = items.length;
+  const dummyItems = items;
   const self = {};
   const current = {
     binSize: '',
@@ -16,15 +17,14 @@ module.exports = (items, store, packageCode) => {
 
   self.init = () => {
     if (store === '265' && packageCode === 'DX0') {
-      console.log(items);
       self.placeItems();
-
-      console.log({ boxes, current, initialItems });
     }
+    console.log(boxes, current);
   };
 
   self.placeItems = () => {
     items.forEach((item, index) => {
+      // console.log({ vol: item.volume, index, length: items.length });
       const algo = {
         boxHasSpace: false,
         currentHasSpace: false,
@@ -48,8 +48,6 @@ module.exports = (items, store, packageCode) => {
       // Place order to current box w residual capacity
       algo.currentHasSpace = current.residualCapacity > item.volume && current.residualCapacity > 0;
 
-      // console.log(algo);
-
       if (algo.boxHasSpace) {
         boxes[availableBoxIndex].items.push(item);
         boxes[availableBoxIndex].residualCapacity -= item.volume;
@@ -63,11 +61,6 @@ module.exports = (items, store, packageCode) => {
         self.pushBinToBox();
         self.initCurrent(item);
       }
-
-      // Update items array
-      _.remove(items, (currentObject) => {
-        return currentObject === item;
-      });
     });
   };
 
@@ -78,7 +71,7 @@ module.exports = (items, store, packageCode) => {
   };
 
   self.initCurrent = (item) => {
-    const sum = _.round(_.sumBy(items, 'volume'), 2);
+    const sum = _.round(_.sumBy(dummyItems, 'volume'), 2);
     const binSize = binSizes.find((size) => size > sum) || _.max(binSizes);
 
     current.binSize = binSize;
@@ -104,7 +97,7 @@ module.exports = (items, store, packageCode) => {
       boxes.push({
         binSize: current.binSize,
         binId: `${store}-${packageCode}-${boxes.length}`,
-        items: current.items.filter((el) => el.volume),
+        items: current.items,
         length: current.items.length,
         residualCapacity: current.binSize - _.sumBy(current.items, 'volume'),
       });

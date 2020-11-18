@@ -4,11 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "convert": "node scripts/parseData.js --csv ./Veri_57.csv --json Veri_57"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "path": "^0.12.7",
+    "yargs": "^16.1.1"
   },
   "devDependencies": {
     "eslint": "7.2.0",

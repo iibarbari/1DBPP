@@ -6,3 +6,4 @@ yarn-error.log
 **/*.json
 dummy/
 **/*.xlsx
+.DS_Store

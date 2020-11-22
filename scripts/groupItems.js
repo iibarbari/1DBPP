@@ -1,15 +1,15 @@
 const _ = require('lodash');
 
-module.exports = (items) => {
-  const stores = _.mapValues(_.groupBy(items, 'store'), (itemsList) =>
-    itemsList.map((items) => _.omit(items, 'store'))
-  );
+class GroupItems {
+  constructor(data) {
+    this.data = data;
+  }
 
-  const packageCodes = _.mapValues(stores, (storeList) => {
-    return _.mapValues(_.groupBy(storeList, 'packageCode'), (sList) =>
-      sList.map((s) => _.omit(s, 'packageCode'))
+  get extractStores() {
+    return _.mapValues(_.groupBy(this.data, 'store'), (stores) =>
+      stores.map((store) => _.omit(store, 'store'))
     );
-  });
+  }
+}
 
-  return packageCodes;
-};
+module.exports = { GroupItems };

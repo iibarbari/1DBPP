@@ -1,11 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const yargs = require('yargs/yargs');
-const { hideBin } = require('yargs/helpers');
-
-require('dotenv').config();
-
-const { csv, json } = yargs(hideBin(process.argv)).argv;
 
 class CSVtoJSON {
   constructor(csvFileName, fileName) {
@@ -25,7 +19,7 @@ class CSVtoJSON {
         demand: parseInt(line[2], 10),
         packageCode: line[5].trim(),
         volume: parseFloat((parseFloat(line[3]) * parseFloat(line[4])).toFixed(2)),
-        packageOrder: parseInt(line[7], 10)
+        packageOrder: parseInt(line[7], 10),
       };
 
       result.push(itemObj);
@@ -47,15 +41,8 @@ class CSVtoJSON {
       }
     );
 
-    return `CSV converted to JSON`;
+    return data;
   }
-}
-
-if (csv !== undefined && json !== undefined) {
-  const parsed = new CSVtoJSON(csv, json).writeToFile();
-
-  // eslint-disable-next-line no-console
-  console.log(parsed);
 }
 
 module.exports = { CSVtoJSON };

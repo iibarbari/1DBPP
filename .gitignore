@@ -2,4 +2,7 @@ node_modules
 .vscode/
 yarn-error.log
 .idea/
-*.csv
+**/*.csv
+**/*.json
+dummy/
+**/*.xlsx

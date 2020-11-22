@@ -5,13 +5,15 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon index.js",
-    "convert": "node scripts/parseData.js --csv ./Veri_57.csv --json Veri_57"
+    "run": "node index.js"
   },
   "dependencies": {
     "dotenv": "^8.2.0",
+    "exceljs": "^4.2.0",
+    "json2xls": "^0.1.2",
     "lodash": "^4.17.20",
     "path": "^0.12.7",
-    "yargs": "^16.1.1"
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "eslint": "7.2.0",

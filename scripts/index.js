@@ -1,6 +1,6 @@
-const groupItems = require('./groupItems');
-const parseData = require('./parseData');
-const placeOrders = require('./placeOrders');
-const sortVolumes = require('./sortVolumes');
+const { GroupItems } = require('./groupItems');
+const { CSVtoJSON } = require('./csvToJson');
+const { BestFitDecreasing } = require('./bestFitDecreasing');
+const { Output } = require('./output');
 
-module.exports = { groupItems, parseData, placeOrders, sortVolumes };
+module.exports = { BestFitDecreasing, CSVtoJSON, GroupItems, Output };

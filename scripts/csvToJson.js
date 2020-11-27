@@ -19,6 +19,9 @@ class CSVtoJSON {
         demand: parseInt(line[2], 10),
         packageCode: line[5].trim(),
         volume: parseFloat((parseFloat(line[3]) * parseFloat(line[4])).toFixed(2)),
+        totalVolume: parseFloat(
+          (parseFloat(line[3]) * parseFloat(line[4])).toFixed(2) * parseInt(line[2], 10)
+        ),
         packageOrder: parseInt(line[7], 10),
       };
 

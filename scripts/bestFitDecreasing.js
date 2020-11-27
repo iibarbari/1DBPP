@@ -1,7 +1,7 @@
 const _ = require('lodash');
-const fs = require('fs');
-const path = require('path');
-const dummyData = require('../dummy');
+// const fs = require('fs');
+// const path = require('path');
+// const dummyData = require('../dummy');
 
 class BestFitDecreasing {
   constructor(storeId, items, binCapacities = [17, 22, 33]) {
@@ -65,11 +65,7 @@ class BestFitDecreasing {
 
   chooseBin(item) {
     const sortedBoxes = _.orderBy(this.bins, 'residualCapacity', 'desc');
-    const availableBinIndex = this.bins.indexOf(
-      sortedBoxes.find((box) => box.residualCapacity >= item.volume)
-    );
-
-    return availableBinIndex;
+    return this.bins.indexOf(sortedBoxes.find((box) => box.residualCapacity >= item.volume));
   }
 
   mapWeights() {

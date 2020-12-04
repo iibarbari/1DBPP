@@ -5,6 +5,14 @@ class CSVtoJSON {
   constructor(csvFileName, fileName) {
     this.csv = csvFileName;
     this.file = fileName;
+    this.order = {
+      id: 0,
+      store: 1,
+      demand: 2,
+      numberOfPacks: 3,
+      avgVolume: 4,
+      packageCode: 5,
+    };
   }
 
   convert() {
@@ -13,16 +21,16 @@ class CSVtoJSON {
 
     lines.forEach((l) => {
       const line = l.replace('\r', '').split(',');
+
       const itemObj = {
-        id: parseInt(line[0], 10),
-        store: parseInt(line[1], 10),
-        demand: parseInt(line[2], 10),
-        packageCode: line[5].trim(),
-        volume: parseFloat((parseFloat(line[3]) * parseFloat(line[4])).toFixed(2)),
-        totalVolume: parseFloat(
-          (parseFloat(line[3]) * parseFloat(line[4])).toFixed(2) * parseInt(line[2], 10)
-        ),
-        packageOrder: parseInt(line[7], 10),
+        id: Number(line[this.order.id]),
+        store: Number(line[this.order.store]),
+        demand: Number(line[this.order.demand]),
+        numberOfPacks: Number(line[this.order.numberOfPacks]),
+        avgVolume: Number(line[this.order.avgVolume]),
+        packageCode: line[this.order.packageCode].trim(),
+        volume:
+          line[this.order.demand] * line[this.order.numberOfPacks] * line[this.order.avgVolume],
       };
 
       result.push(itemObj);

@@ -2,7 +2,8 @@ const { BestFitDecreasing, CSVtoJSON, GroupItems, Output } = require('./scripts/
 
 require('dotenv').config();
 
-const convertedData = new CSVtoJSON('./sampleData.csv', 'sampleData').writeToFile();
+const convertedData = new CSVtoJSON('./veri.csv', 'veri').convert();
+
 const groupedData = new GroupItems(convertedData).extractPackageCodes;
 
 const finalBins = [];

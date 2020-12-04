@@ -14,12 +14,15 @@ class Output {
   }
 
   createBinData() {
-    this.binData = this.data.map(({ id, size, storeId, residualCapacity }) => {
+    this.binData = this.data.map(({ id, size, storeId, residualCapacity, packageCode }) => {
       return {
         id,
-        size,
         storeId,
+        packageCode,
+        size,
         residualCapacity,
+        used: size - residualCapacity,
+        usage: `${(((size - residualCapacity) / size) * 100).toFixed(2)}%`,
       };
     });
   }
@@ -28,7 +31,7 @@ class Output {
     this.itemData = _.flatMap(
       _.map(this.data, (b) =>
         b.items.map((i) => {
-          return { ...i, storeId: b.storeId, binId: b.id };
+          return i;
         })
       )
     );

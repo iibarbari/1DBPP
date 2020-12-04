@@ -1,16 +1,14 @@
 const _ = require('lodash');
-// const fs = require('fs');
-// const path = require('path');
-// const dummyData = require('../dummy');
 
 class BestFitDecreasing {
-  constructor(storeId, items, binCapacities = [17, 22, 33]) {
+  constructor(storeId, items, withPackages = true, binCapacities = [17, 22, 33]) {
     this.bins = [];
     this.items = items;
     this.capacities = binCapacities.sort((a, b) => a - b);
     this.capacity = 0;
     this.storeId = storeId;
     this.totalWeight = _.sumBy(items, 'volume');
+    this.withPackages = withPackages;
   }
 
   get placeItems() {
@@ -33,14 +31,39 @@ class BestFitDecreasing {
   createNewBin(item) {
     this.decideBinSize();
 
-    this.bins.push({
-      id: this.bins.length,
-      // volumes: [item.volume],
-      items: [item],
-      storeId: this.storeId,
-      size: this.capacity,
-      residualCapacity: this.capacity - item.volume,
-    });
+    const binDetails = this.withPackages
+      ? {
+          id: `${this.storeId.split('-')[0]}-${this.bins.length}`,
+          // volumes: [item.volume],
+          items: [
+            {
+              ...item,
+              storeId: this.storeId.split('-')[0],
+              packageCode: this.storeId.split('-')[1],
+              binId: `${this.storeId.split('-')[0]}-${this.bins.length}`,
+            },
+          ],
+          storeId: this.storeId.split('-')[0],
+          packageCode: this.storeId.split('-')[1],
+          size: this.capacity,
+          residualCapacity: this.capacity - item.volume,
+        }
+      : {
+          id: this.bins.length,
+          // volumes: [item.volume],
+          items: [
+            {
+              ...item,
+              storeId: this.storeId,
+              binId: this.bins.length,
+            },
+          ],
+          storeId: this.storeId,
+          size: this.capacity,
+          residualCapacity: this.capacity - item.volume,
+        };
+
+    this.bins.push(binDetails);
   }
 
   decideBinSize() {
@@ -78,7 +101,21 @@ class BestFitDecreasing {
         this.bins[availableBinIndex] = {
           ...this.bins[availableBinIndex],
           // volumes: [...this.bins[availableBinIndex].volumes, item.volume],
-          items: [...this.bins[availableBinIndex].items, item],
+          items: [
+            ...this.bins[availableBinIndex].items,
+            this.withPackages
+              ? {
+                  ...item,
+                  storeId: this.storeId.split('-')[0],
+                  packageCode: this.storeId.split('-')[1],
+                  binId: `${this.storeId.split('-')[0]}-${this.bins.length}`,
+                }
+              : {
+                  ...item,
+                  storeId: this.storeId,
+                  binId: this.bins.length,
+                },
+          ],
           residualCapacity: _.round(this.bins[availableBinIndex].residualCapacity - item.volume, 2),
         };
       }
@@ -87,8 +124,3 @@ class BestFitDecreasing {
 }
 
 module.exports = { BestFitDecreasing };
-
-// const capacity = [17, 22, 33];
-// const boxes = new BestFitDecreasing('351', dummyData, capacity).placeItems;
-// // eslint-disable-next-line no-console
-// console.log(boxes);

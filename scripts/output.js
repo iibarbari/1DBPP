@@ -43,6 +43,9 @@ class Output {
 
     fs.writeFileSync(path.resolve(__dirname, '../', `items.xlsx`), xlsItems, 'binary');
     fs.writeFileSync(path.resolve(__dirname, '../', `bins.xlsx`), xlsBins, 'binary');
+
+    // fs.writeFileSync(path.resolve(__dirname, '../', `bins.json`), JSON.stringify(this.binData));
+    // fs.writeFileSync(path.resolve(__dirname, '../', `items.json`), JSON.stringify(this.itemData));
   }
 }
 

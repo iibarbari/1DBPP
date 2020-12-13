@@ -33,14 +33,16 @@ class BestFitDecreasing {
 
     const binDetails = this.withPackages
       ? {
-          id: `${this.storeId.split('-')[0]}-${this.bins.length}`,
+          id: `${this.storeId.split('-')[0]}-${this.bins.length}-${this.storeId.split('-')[1]}`,
           // volumes: [item.volume],
           items: [
             {
               ...item,
               storeId: this.storeId.split('-')[0],
               packageCode: this.storeId.split('-')[1],
-              binId: `${this.storeId.split('-')[0]}-${this.bins.length}`,
+              binId: `${this.storeId.split('-')[0]}-${this.bins.length}-${
+                this.storeId.split('-')[1]
+              }`,
             },
           ],
           storeId: this.storeId.split('-')[0],
@@ -108,12 +110,12 @@ class BestFitDecreasing {
                   ...item,
                   storeId: this.storeId.split('-')[0],
                   packageCode: this.storeId.split('-')[1],
-                  binId: `${this.storeId.split('-')[0]}-${this.bins.length}`,
+                  binId: this.bins[availableBinIndex].id,
                 }
               : {
                   ...item,
                   storeId: this.storeId,
-                  binId: this.bins.length,
+                  binId: this.bins[availableBinIndex].id,
                 },
           ],
           residualCapacity: _.round(this.bins[availableBinIndex].residualCapacity - item.volume, 2),

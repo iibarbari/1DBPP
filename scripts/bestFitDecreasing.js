@@ -1,7 +1,7 @@
 const _ = require('lodash');
 
 class BestFitDecreasing {
-  constructor(storeId, items, withPackages = true, binCapacities = [17, 22, 33]) {
+  constructor(storeId, items, withPackages, binCapacities = [17, 22, 33]) {
     this.bins = [];
     this.items = items;
     this.capacities = binCapacities.sort((a, b) => a - b);
@@ -51,7 +51,7 @@ class BestFitDecreasing {
           residualCapacity: this.capacity - item.volume,
         }
       : {
-          id: this.bins.length,
+          id: `${this.storeId}-${this.bins.length}`,
           // volumes: [item.volume],
           items: [
             {
